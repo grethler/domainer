@@ -18,11 +18,12 @@ from selenium.common.exceptions import NoSuchElementException
 from webdriver_manager.firefox import GeckoDriverManager
 
 class Domainer:
-    opt = Options()
-    #opt.add_argument()
-    #opt.add_argument("--headless")
-    opt.add_argument("--disable-gpu")
-    browser = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=opt)
+    def __init__(self):
+        opt = Options()
+        #opt.add_argument()
+        opt.add_argument("--headless")
+        opt.add_argument("--disable-gpu")
+        self.browser = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=opt)
     
     def logo(self):
         print("      _                       _\n" +                 
@@ -34,7 +35,7 @@ class Domainer:
             "Made by Florian Grethler 2023\n"+
             "info@florian-grethler.de\n"+
             "www.florian-grethler.de\n"+ 
-            "Released under the Apache v2.0 license\n\n"                                                    
+            "Released under the Gnu general public license\n\n"                                                    
             )
         
     def test_stats(self):
@@ -46,29 +47,29 @@ class Domainer:
     def check_element(self, element):
         available = True
         try:
-            browser.find_element(element[0], element[1])
+            self.browser.find_element(element[0], element[1])
         except NoSuchElementException:
             available = False
         return(available)
         
     def get_urls(self, domain):  
-        captcha_present = check_element([By.ID, "recaptcha-checkbox-border"])
+        captcha_present = self.check_element([By.ID, "recaptcha-checkbox-border"])
         if captcha_present:
             captcha.click()
 
-        cookies_present = check_element([By.ID, "W0wltc"])
+        cookies_present = self.check_element([By.ID, "W0wltc"])
         if cookies_present:
             button.click()
 
         urls = []
-        next_page_available = check_element([By.ID, "pnnext"])
+        next_page_available = self.check_element([By.ID, "pnnext"])
             
         while(next_page_available):
-            captcha_present = check_element([By.ID, "recaptcha-checkbox-border"])
+            captcha_present = self.check_element([By.ID, "recaptcha-checkbox-border"])
             if captcha_present:
                 captcha.click()
             
-            for url in browser.find_elements(By.CLASS_NAME, "qLRx3b"):
+            for url in self.browser.find_elements(By.CLASS_NAME, "qLRx3b"):
                 if url.text != "":
                     cleaned_url = url.text.replace("...", "").replace(" ", "")
                     idx = cleaned_url.index("\u203a")
@@ -80,7 +81,7 @@ class Domainer:
                 next_page.click()
             
         print(urls)
-        browser.quit()
+        self.browser.quit()
         
     def main(self, test):
         if test:
