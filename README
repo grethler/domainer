@@ -13,10 +13,9 @@
 
 This program is designed to get subdomains to a domainname.
 
-
 ## Install requirements:
 python3
 docker
 
-## How to install:
-```wget https://github.com/delsyst0m/domainer/archive/main.zip```
+## Getting started:
+Unsecure: just start the python script
