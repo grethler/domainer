@@ -13,7 +13,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 from webdriver_manager.firefox import GeckoDriverManager
 
-class Greq:
+class Googlecheck:
     def __init__(self):
         opts = Options()
         opts.add_argument("--headless")

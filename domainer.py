@@ -8,7 +8,7 @@ import requests
 import urllib3
 import sys
 
-from domainer.www.g import Greq
+from domainer.www.google import Googlecheck
 
 class Domainer:
     
@@ -38,7 +38,7 @@ class Domainer:
             
     def main(self):        
         self.logo()
-        g = Greq()
+        g = Googlecheck()
         
         domainname = input("Please enter a domain without subdomain and protocol:\n")
         
