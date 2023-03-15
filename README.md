@@ -2,7 +2,8 @@
 ![dev](https://img.shields.io/badge/Dev-Python3-brightgreen)
 ![license](https://img.shields.io/badge/License-GPLv3-yellow)
 
-```       _                       _                 
+```
+          _                       _                 
          | |                     (_)               
        __| | ___  _ __ ___   __ _ _ _ __   ___ _ __
       / _` |/ _ \| '_ ` _ \ / _` | | '_ \ / _ \ '__|
