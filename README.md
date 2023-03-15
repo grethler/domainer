@@ -1,15 +1,16 @@
 ![version](https://img.shields.io/badge/Version-1.0-blue)
 ![dev](https://img.shields.io/badge/Dev-Python3-brightgreen)
-![license](https://img.shields.io/badge/Malware%20Types-7%20-red)
+![license](https://img.shields.io/badge/License-GPLv3-yellow)
 
 ```       _                       _                 
          | |                     (_)               
        __| | ___  _ __ ___   __ _ _ _ __   ___ _ __
       / _` |/ _ \| '_ ` _ \ / _` | | '_ \ / _ \ '__|
      | (_| | (_) | | | | | | (_| | | | | |  __/ |
-      \__,_|\___/|_| |_| |_|\__,_|_|_| |_|\___|_| v1.0```
+      \__,_|\___/|_| |_| |_|\__,_|_|_| |_|\___|_| v1.0
+```
 
-# Welcome to domainer! \
+# Welcome to domainer!
 
 This program is designed to get subdomains to a domainname.
 
