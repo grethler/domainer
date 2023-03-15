@@ -1,5 +1,6 @@
 ![version](https://img.shields.io/badge/Version-1.0-blue)
-![dev](https://img.shields.io/badge/Dev-Python3-brightgreen)
+![dev](https://img.shields.io/badge/Python-3.10.10-green)
+![dev](https://img.shields.io/badge/Docker-20.10.23-green)
 ![license](https://img.shields.io/badge/License-GPLv3-yellow)
 
 ```
