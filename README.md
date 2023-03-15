@@ -1,6 +1,6 @@
 ![version](https://img.shields.io/badge/Version-1.0-blue)
 ![dev](https://img.shields.io/badge/Dev-Python3-brightgreen)
-![license](https://img.shields.io/badge/Malware%20Types-7%20-red)
+![license](https://img.shields.io/badge/License-GPLv3-yellow)
 
 ```       _                       _                 
          | |                     (_)               
