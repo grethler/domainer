@@ -1,8 +1,8 @@
-![version](https://img.shields.io/badge/Version-1.0-blue)
-![dev](https://img.shields.io/badge/Dev-Python3-brightgreen)
-![license](https://img.shields.io/badge/License-GPLv3-yellow)
+[![version](https://img.shields.io/badge/Version-1.0-blue)](#)
+[![license](https://img.shields.io/badge/License-GPLv3-yellow)](#)
 
-```       _                       _                 
+```
+          _                       _                 
          | |                     (_)               
        __| | ___  _ __ ___   __ _ _ _ __   ___ _ __
       / _` |/ _ \| '_ ` _ \ / _` | | '_ \ / _ \ '__|
@@ -15,8 +15,8 @@
 This program is designed to get subdomains to a domainname.
 
 ## Install requirements:
-python3
-docker
+[![dev](https://img.shields.io/badge/Python-3.10.10-green)](#)
+[![dev](https://img.shields.io/badge/Docker-20.10.23-green)](#)
 
 ## Getting started:
 Unsecure: just start the python script
