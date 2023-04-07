@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 #
 # Florian Grethler 2023
+# Github: @delsyst0m
 # info@florian-grethler.de
 # www.florian-grethler.de
 
-import requests
-import urllib3
 import sys
 
-from domainer.www.google import Googlecheck
+from domainer.runsearches import Runsearches
 
 class Domainer:
     
@@ -18,15 +17,14 @@ class Domainer:
             "   __| | ___  _ __ ___   __ _ _ _ __   ___ _ __\n"+ 
             "  / _` |/ _ \| '_ ` _ \ / _` | | '_ \ / _ \ '__|\n"+
             " | (_| | (_) | | | | | | (_| | | | | |  __/ |\n"+   
-            "  \__,_|\___/|_| |_| |_|\__,_|_|_| |_|\___|_| v1.0\n\n"+
-            "Made by Florian Grethler 2023\n"+
+            "  \__,_|\___/|_| |_| |_|\__,_|_|_| |_|\___|_|\n\n"+
+            "Made by Florian Grethler @delsyst0m\n"+
             "info@florian-grethler.de\n"+
-            "www.florian-grethler.de\n"+ 
-            "Released under the Gnu general public license\n\n"                                                    
+            "www.florian-grethler.de\n\n"                                                 
             )
     
     def askexport(self, domains):
-        export  = input("\nDo you want to export them? (Y/N) ")
+        export  = input("\nDo you want to export them? (Y/N)\n")
         if export == "Y" or export == "y":
             f = open("domains.csv")
             for i in domains:
@@ -38,19 +36,15 @@ class Domainer:
             
     def main(self):        
         self.logo()
-        g = Googlecheck()
         
-        domainname = input("Please enter a domain without subdomain and protocol:\n")
-        
+        domainname = input("Please enter a domain (e.g. abcdef.xyz):\n")
+
         print("\nSearching for subdomains of: " + domainname)
         
-        domains = g.get_urls(domainname)
+        start = Runsearches()
+        domains = start.searches(domainname)
         
-        print("\nThe following " + str(len(domains)) +  " domains have been found:")
-        
-        for domain in domains:
-            print(domain)
-            
+        print("\nA total of " + str(len(domains)) +  " domains have been found!")
         self.askexport(domains)   
         
 if __name__ == "__main__":
