@@ -55,7 +55,10 @@ class Googlecheck:
         num = 0   
         cookie = {}
         while(True):
-            self.browser.add_cookie(cookie)
+            #if not cookie:
+            #    cookie = self.browser.get_cookie("GOOGLE_ABUSE_EXEMPTION")      
+            #self.browser.add_cookie(cookie)
+            
             self.browser.get("https://www.google.com/search?q=site%3A" + domain + "&start=" + str(num))
             
             if self.check_element([By.ID, "recaptcha-checkbox-border"]):
@@ -63,9 +66,6 @@ class Googlecheck:
                 
             if self.check_element([By.ID, "W0wltc"]):
                 self.browser.find_element(By.ID, "W0wltc").click()
-                 
-            if not cookie:
-                cookie = self.browser.get_cookie("GOOGLE_ABUSE_EXEMPTION") 
                   
             for url in self.browser.find_elements(By.TAG_NAME, "cite"):
                 if url.text and domain in url.text:
@@ -73,9 +73,9 @@ class Googlecheck:
                     cleaned_url = url.text.split("//")[-1]
                     try:
                         idx = cleaned_url.index("\u203a")
+                        cleaned_url = cleaned_url[:idx]  
                     except ValueError:
-                        pass
-                    cleaned_url = cleaned_url[:idx]    
+                        pass   
                     if cleaned_url not in urls:
                         print(cleaned_url)
                         urls += [cleaned_url]
