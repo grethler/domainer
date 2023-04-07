@@ -1,4 +1,3 @@
-![version](https://img.shields.io/badge/Version-1.1-blue)
 ![license](https://img.shields.io/badge/License-GNU GPLv3-yellow)
 ![dev](https://img.shields.io/badge/python-3.10-brightgreen)
 ![dev](https://img.shields.io/badge/Docker-4.17-brightgreen)
@@ -7,7 +6,7 @@
        __| | ___  _ __ ___   __ _ _ _ __   ___ _ __
       / _` |/ _ \| '_ ` _ \ / _` | | '_ \ / _ \ '__|
      | (_| | (_) | | | | | | (_| | | | | |  __/ |
-      \__,_|\___/|_| |_| |_|\__,_|_|_| |_|\___|_| v1.1
+      \__,_|\___/|_| |_| |_|\__,_|_|_| |_|\___|_|
 ```
 > Florian Grethler 2023
 > Github: @delsyst0m
