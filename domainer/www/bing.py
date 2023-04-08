@@ -21,6 +21,7 @@ class Bingcheck:
         opts = Options()
         opts.add_argument("--headless")
         opts.add_argument("--disable-gpu")
+        opts.set_preference('intl.accept_languages', 'en-GB')
         firefox_profile = FirefoxProfile()
         firefox_profile.set_preference("browser.privatebrowsing.autostart", True)
         self.browser = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=opts,
@@ -47,15 +48,18 @@ class Bingcheck:
     def get_urls(self, domain):  
         number = 1
         urls = []
-        pagelements=""
-          
+        pages = ""
+        
         while(True):
+            if self.check_element([By.CLASS_NAME, "sb_pagS"]):
+                pages = self.browser.find_element(By.CLASS_NAME, "sb_pagS").text 
+                
             self.browser.get("https://www.bing.com/search?q=site%3A" + domain + "&first=" + str(number))
                 
             if self.check_element([By.ID, "bnp_cookie_banner"]):
                 self.browser.execute_script("""const element = document.getElementById("bnp_cookie_banner");
                                             if (element !== null) element.remove();""")
-            print   
+                   
             """if self.check_element([By.ID, "bnp_btn_reject"]):
                 #self.browser.add_cookie({"name":"BCP","value":"AD=0&AL=0&SM=0","secure":True, "domain":".bing.com"})
                 for i in range(4): self.browser.refresh()
@@ -69,12 +73,12 @@ class Bingcheck:
                     cleaned_url = (url.text).split("://")[-1].split(domain)[0] + domain
                     if cleaned_url not in urls:
                         urls += [cleaned_url]
-            time.sleep(1)        
-            if self.browser.find_element(By.CLASS_NAME, "sb_count").text == pagelements:
-                break
-            else:
-                pagelements = self.browser.find_element(By.CLASS_NAME, "sb_count").text
-                
+            time.sleep(1)    
+            
             number += 30
+
+            #print((self.browser.find_element(By.CLASS_NAME, "sb_count").text).split(" ")[-2].replace(".",""))
+            if pages == self.browser.find_element(By.CLASS_NAME, "sb_pagS").text:
+                break            
         self.browser.quit()
         return(urls)
