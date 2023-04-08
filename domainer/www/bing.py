@@ -13,7 +13,6 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import ElementNotInteractableException
 from webdriver_manager.firefox import GeckoDriverManager
 
 class Bingcheck:
@@ -24,7 +23,8 @@ class Bingcheck:
         opts.set_preference('intl.accept_languages', 'en-GB')
         firefox_profile = FirefoxProfile()
         firefox_profile.set_preference("browser.privatebrowsing.autostart", True)
-        self.browser = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=opts,
+        self.browser = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), 
+                                         options=opts,
                                          firefox_profile=firefox_profile)
         
     def test_connection(self):
@@ -33,7 +33,7 @@ class Bingcheck:
             response = requests.get("https://www.bing.com/")
             if not response.ok:
                raise Exception 
-        except:
+        except Exception:
             stat = False
         return stat
     
@@ -52,21 +52,16 @@ class Bingcheck:
         
         while(True):
             if self.check_element([By.CLASS_NAME, "sb_pagS"]):
-                pages = self.browser.find_element(By.CLASS_NAME, "sb_pagS").text 
+                pages = self.browser.find_element(By.CLASS_NAME, 
+                                                  "sb_pagS").text 
                 
-            self.browser.get("https://www.bing.com/search?q=site%3A" + domain + "&first=" + str(number))
+            self.browser.get("https://www.bing.com/search?q=site%3A" + 
+                             domain + "&first=" + str(number))
                 
             if self.check_element([By.ID, "bnp_cookie_banner"]):
-                self.browser.execute_script("""const element = document.getElementById("bnp_cookie_banner");
-                                            if (element !== null) element.remove();""")
-                   
-            """if self.check_element([By.ID, "bnp_btn_reject"]):
-                #self.browser.add_cookie({"name":"BCP","value":"AD=0&AL=0&SM=0","secure":True, "domain":".bing.com"})
-                for i in range(4): self.browser.refresh()
-                try:
-                    self.browser.find_element(By.ID, "bnp_btn_reject").click()
-                except ElementNotInteractableException:
-                    self.browser.find_element(By.XPATH, "/html/body/div/div/div[2]/div[2]/div[2]/button[2]").click()"""
+                self.browser.execute_script(
+                """const element = document.getElementById("bnp_cookie_banner");
+                    if (element !== null) element.remove();""")
             
             for url in self.browser.find_elements(By.TAG_NAME, "cite"):
                 if url.text and domain in url.text:

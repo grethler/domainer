@@ -10,10 +10,14 @@ import argparse
 from domainer.runsearches import Runsearches
 
 argp = argparse.ArgumentParser()
-argp.add_argument("-w", "--www", default=False, action="store_true", help="use web search")
-argp.add_argument("-d", "--dict", default=False, action="store_true", help="use dictionary attack")
-argp.add_argument("-n", "--dns", default=False, action="store_true", help="use dns search")
-argp.add_argument("-A", default=False, action="store_true", help="Use all searches and attacks")
+argp.add_argument("-w", "--www", default=False, action="store_true", 
+                  help="use web search")
+argp.add_argument("-d", "--dict", default=False, action="store_true", 
+                  help="use dictionary attack")
+argp.add_argument("-n", "--dns", default=False, action="store_true", 
+                  help="use dns search")
+argp.add_argument("-A", default=False, action="store_true", 
+                  help="Use all searches and attacks")
 argp.add_argument("target", help="Target for example: abcdefg.xyz")
 args = argp.parse_args()
     
