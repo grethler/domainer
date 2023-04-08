@@ -51,7 +51,8 @@ class Domainer:
         
         start = Runsearches(www=args.www, dns=args.dns, dic=args.dict, all=args.A)
         domains = start.searches(domainname)
-        
+        for dom in domains:
+            print(f"{dom}\n")
         print("\nA total of " + str(len(domains)) +  " domains have been found!")
         self.askexport(domains)   
         
