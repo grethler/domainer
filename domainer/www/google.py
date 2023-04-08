@@ -20,6 +20,7 @@ class Googlecheck:
         opts = Options()
         opts.add_argument("--headless")
         opts.add_argument("--disable-gpu")
+        opts.set_preference('intl.accept_languages', 'en-GB')
         firefox_profile = FirefoxProfile()
         firefox_profile.set_preference("browser.privatebrowsing.autostart", True)
         self.browser = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=opts,
@@ -56,6 +57,7 @@ class Googlecheck:
         entries = ""
         
         while(True):
+            progress = ""
             #if not cookie:
             #    cookie = self.browser.get_cookie("GOOGLE_ABUSE_EXEMPTION")      
             #self.browser.add_cookie(cookie)
@@ -68,15 +70,7 @@ class Googlecheck:
                 self.browser.find_element(By.ID, "W0wltc").click()
             
             if num == 0:
-                print(self.browser.find_element(By.ID, "result-stats").text)   
-                time.sleep(100000)
-                #if i in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]:
-                #print(i)
-                # jede seite hat 30 ergebnisse
-                # die zahl dann durch 30 = x
-                # x <--> 100
-                # 1 <--> 100/x
-                # num <--> num*(100/x) <--- wie viel bereits durchlaufen
+                entries = int((self.browser.find_element(By.ID, "result-stats").text).split(" ")[1].replace(".", ""))
                     
             for url in self.browser.find_elements(By.TAG_NAME, "cite"):
                 if url.text and domain in url.text:
@@ -92,7 +86,17 @@ class Googlecheck:
                   
             time.sleep(2)
             num += 10
+            progress += "Progress: ["
+            perc = int(50*(num/entries))
+            for i in range(perc):
+                progress += "X"
+            for i in range(50-perc):
+                progress += "-"
+            progress += "]"
+            print(progress, end="\r")
+            
             if not self.check_element([By.ID, "pnnext"]):
+                print("\n")
                 break
             
         self.browser.quit()
