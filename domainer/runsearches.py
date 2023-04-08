@@ -9,6 +9,8 @@ class Runsearches:
         self.do_all = all
         
     def searches(self, domain): 
+        """This function takes the arguments and runs the requested searches.
+        """
         domains = []
         
         if self.do_all:

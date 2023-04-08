@@ -27,6 +27,8 @@ class Googlecheck:
                                          firefox_profile=firefox_profile)
         
     def test_connection(self):
+        """This funtion test if one can connect to the site.
+        """
         stat = True
         try:
             response = requests.get("https://www.google.com/")
@@ -37,6 +39,8 @@ class Googlecheck:
         return stat
     
     def check_element(self, element):
+        """This function checks if an element is available.
+        """
         available = True
         try:
             self.browser.find_element(element[0], element[1])
@@ -51,7 +55,9 @@ class Googlecheck:
                 available = False
         return(available)
         
-    def get_urls(self, domain):  
+    def get_urls(self, domain):
+        """This function gets the domains from each site of the search.
+        """  
         urls = []
         num = 0   
         entries = ""

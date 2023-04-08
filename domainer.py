@@ -20,6 +20,8 @@ args = argp.parse_args()
 class Domainer:
     
     def logo(self):
+        """This function prints the logo of the script.
+        """
         print("      _                       _\n" +                 
             "     | |                     (_)\n"+                
             "   __| | ___  _ __ ___   __ _ _ _ __   ___ _ __\n"+ 
@@ -32,6 +34,8 @@ class Domainer:
             )
     
     def askexport(self, domains):
+        """This function asks if the user wants to export the domains as a csv file.
+        """
         export  = input("\nDo you want to export them? (Y/N)\n")
         if export == "Y" or export == "y":
             f = open("domains.csv")
@@ -42,7 +46,9 @@ class Domainer:
         else:
             self.askexport(domains)
             
-    def main(self):        
+    def main(self):  
+        """This is the start function of domainer.
+        """      
         self.logo()
         
         domainname = args.target
