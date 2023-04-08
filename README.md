@@ -1,6 +1,5 @@
 ![license](https://img.shields.io/badge/License-GNU_GPLv3-blue)
-![dev](https://img.shields.io/badge/python-3.10-brightgreen)
-![dev](https://img.shields.io/badge/Docker-4.17-brightgreen)
+![dev](https://img.shields.io/badge/python-3.10|3.11-brightgreen)
 ```
           _                       _                 
          | |                     (_)               
