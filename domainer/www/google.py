@@ -23,9 +23,10 @@ class Googlecheck:
         opts.set_preference('intl.accept_languages', 'en-GB')
         firefox_profile = FirefoxProfile()
         firefox_profile.set_preference("browser.privatebrowsing.autostart", True)
-        self.browser = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), 
-                                         options=opts,
-                                         firefox_profile=firefox_profile)
+        self.browser = webdriver.Firefox(
+            service=FirefoxService(GeckoDriverManager().install()),
+            options=opts,
+            firefox_profile=firefox_profile)
         
     def test_connection(self):
         """This funtion test if one can connect to the site.

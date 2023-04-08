@@ -23,9 +23,10 @@ class Bingcheck:
         opts.set_preference('intl.accept_languages', 'en-GB')
         firefox_profile = FirefoxProfile()
         firefox_profile.set_preference("browser.privatebrowsing.autostart", True)
-        self.browser = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), 
-                                         options=opts,
-                                         firefox_profile=firefox_profile)
+        self.browser = webdriver.Firefox(
+            service=FirefoxService(GeckoDriverManager().install()), 
+            options=opts,
+            firefox_profile=firefox_profile)
         
     def test_connection(self):
         stat = True
@@ -72,7 +73,8 @@ class Bingcheck:
             
             number += 30
 
-            #print((self.browser.find_element(By.CLASS_NAME, "sb_count").text).split(" ")[-2].replace(".",""))
+            #print((self.browser.find_element(By.CLASS_NAME, 
+            # "sb_count").text).split(" ")[-2].replace(".",""))
             if pages == self.browser.find_element(By.CLASS_NAME, "sb_pagS").text:
                 break            
         self.browser.quit()
