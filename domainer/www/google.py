@@ -53,20 +53,31 @@ class Googlecheck:
     def get_urls(self, domain):  
         urls = []
         num = 0   
-        cookie = {}
+        entries = ""
+        
         while(True):
             #if not cookie:
             #    cookie = self.browser.get_cookie("GOOGLE_ABUSE_EXEMPTION")      
             #self.browser.add_cookie(cookie)
             
             self.browser.get("https://www.google.com/search?q=site%3A" + domain + "&start=" + str(num))
-            
             if self.check_element([By.ID, "recaptcha-checkbox-border"]):
                 self.browser.find_element(By.ID, "recaptcha-checkbox-border").click()
                 
             if self.check_element([By.ID, "W0wltc"]):
                 self.browser.find_element(By.ID, "W0wltc").click()
-                  
+            
+            if num == 0:
+                print(self.browser.find_element(By.ID, "result-stats").text)   
+                time.sleep(100000)
+                #if i in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]:
+                #print(i)
+                # jede seite hat 30 ergebnisse
+                # die zahl dann durch 30 = x
+                # x <--> 100
+                # 1 <--> 100/x
+                # num <--> num*(100/x) <--- wie viel bereits durchlaufen
+                    
             for url in self.browser.find_elements(By.TAG_NAME, "cite"):
                 if url.text and domain in url.text:
                     # removes protocol
@@ -77,9 +88,8 @@ class Googlecheck:
                     except ValueError:
                         pass   
                     if cleaned_url not in urls:
-                        print(cleaned_url)
                         urls += [cleaned_url]
-                        
+                  
             time.sleep(2)
             num += 10
             if not self.check_element([By.ID, "pnnext"]):

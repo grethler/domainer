@@ -6,9 +6,17 @@
 # www.florian-grethler.de
 
 import sys
-
+import argparse
 from domainer.runsearches import Runsearches
 
+argp = argparse.ArgumentParser()
+argp.add_argument("-w", "--www", default=False, action="store_true", help="use web search")
+argp.add_argument("-d", "--dict", default=False, action="store_true", help="use dictionary attack")
+argp.add_argument("-n", "--dns", default=False, action="store_true", help="use dns search")
+argp.add_argument("-A", default=False, action="store_true", help="Use all searches and attacks")
+argp.add_argument("target", help="Target for example: abcdefg.xyz")
+args = argp.parse_args()
+    
 class Domainer:
     
     def logo(self):
@@ -37,16 +45,19 @@ class Domainer:
     def main(self):        
         self.logo()
         
-        domainname = input("Please enter a domain (e.g. abcdef.xyz):\n")
-
-        print("\nSearching for subdomains of: " + domainname)
+        domainname = args.target
         
-        start = Runsearches()
+        print("Searching for subdomains of: " + domainname)
+        
+        start = Runsearches(www=args.www, dns=args.dns, dic=args.dict, all=args.A)
         domains = start.searches(domainname)
         
         print("\nA total of " + str(len(domains)) +  " domains have been found!")
         self.askexport(domains)   
         
 if __name__ == "__main__":
+    if not args.www and not args.dict and not args.dns and not args.A:
+        sys.exit("Script needs at least one argument besides the target!")
+        
     d = Domainer()
     d.main()
