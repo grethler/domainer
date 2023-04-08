@@ -1,5 +1,6 @@
 ![license](https://img.shields.io/badge/License-GNU_GPLv3-blue)
 ![dev](https://img.shields.io/badge/python-3.10|3.11-brightgreen)
+![ci/cd](https://github.com/delsyst0m/domainer/actions/workflows/pipeline.yml/badge.svg)
 ```
           _                       _                 
          | |                     (_)               
