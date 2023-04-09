@@ -18,7 +18,6 @@ class DictionaryAttack:
         """
         
         domain = f".{domain}"
-        PATH = f"{os.getcwd()}\\domainer\\dictionary\\wordlists\\"
         domains = []
         strength = ""
         available_Domains = []
@@ -33,7 +32,7 @@ class DictionaryAttack:
         elif self.strength == "4":
             strength = "1000000"
             
-        with open(f"{PATH}bitquark_20160227_subdomains \
+        with open(f"{os.getcwd()}bitquark_20160227_subdomains \
             _popular_{strength}.txt", "r", encoding="utf-8") as f:
             for line in f.readlines():
                 domains += [line.strip() + domain]
