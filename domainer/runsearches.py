@@ -1,5 +1,6 @@
 from domainer.www.google import Googlecheck
 from domainer.www.bing import Bingcheck
+from domainer.dictionary.dict_attack import DictionaryAttack
 
 class Runsearches:
     def __init__(self, www, dns, dic, all):
@@ -23,12 +24,12 @@ class Runsearches:
             bing = Bingcheck()
             
             if google.test_connection():
-                for d in google.get_urls(domain):
+                for d in google.get_domains(domain):
                     if d not in domains:
                         domains += [d]
                             
             if bing.test_connection():
-                for d in bing.get_urls(domain):
+                for d in bing.get_domains(domain):
                     if d not in domains:
                         domains += [d]
         
@@ -37,6 +38,8 @@ class Runsearches:
             pass
         
         if self.do_dic:
-            # Work in progress
-            pass       
+            da = DictionaryAttack()
+            for d in da.get_domains(domain):
+                    if d not in domains:
+                        domains += [d]
         return(domains)

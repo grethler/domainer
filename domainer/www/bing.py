@@ -46,7 +46,7 @@ class Bingcheck:
             available = False
         return(available)
     
-    def get_urls(self, domain):  
+    def get_domains(self, domain):  
         number = 1
         urls = []
         pages = ""

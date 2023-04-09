@@ -59,7 +59,7 @@ class Googlecheck:
                 available = False
         return(available)
         
-    def get_urls(self, domain):
+    def get_domains(self, domain):
         """This function gets the domains from each site of the search.
         """  
         urls = []
