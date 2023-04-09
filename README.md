@@ -1,5 +1,6 @@
 ![license](https://img.shields.io/badge/License-GNU_GPLv3-blue)
-![ci/cd](https://github.com/delsyst0m/domainer/actions/workflows/python.yml/badge.svg)
+![python_ci](https://github.com/delsyst0m/domainer/actions/workflows/python.yml/badge.svg)
+![docker_cd](https://github.com/delsyst0m/domainer/actions/workflows/docker.yml/badge.svg)
 ```
           _                       _                 
          | |                     (_)               
