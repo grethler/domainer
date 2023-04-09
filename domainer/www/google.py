@@ -100,18 +100,17 @@ class Googlecheck:
                   
             time.sleep(2)
             num += 10
-            progress += "Progress: ["
+            progress += "\rGoogle progress: ["
             perc = int(50*(num/entries))
             for i in range(perc):
                 progress += "X"
             for i in range(50-perc):
                 progress += "-"
             progress += "]"
-            print(progress, end="\r")
+            print(progress, end="")
             
             if not self.check_element([By.ID, "pnnext"]):
-                print("\n")
                 break
-            
+        print("\n")
         self.browser.quit()
         return(urls)

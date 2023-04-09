@@ -17,7 +17,7 @@ class Runsearches:
         if self.do_all:
             self.do_www = True
             self.do_dns = True
-            self.do_dic = True
+            self.do_dic = "4"
         
         if self.do_www:
             google = Googlecheck()
@@ -38,8 +38,9 @@ class Runsearches:
             pass
         
         if self.do_dic:
-            da = DictionaryAttack()
+            da = DictionaryAttack(self.do_dic)
             for d in da.get_domains(domain):
-                    if d not in domains:
-                        domains += [d]
+                if d not in domains:
+                    domains += [d]
+        
         return(domains)

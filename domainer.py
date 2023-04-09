@@ -12,13 +12,15 @@ from domainer.runsearches import Runsearches
 argp = argparse.ArgumentParser()
 argp.add_argument("-w", "--www", default=False, action="store_true", 
                   help="use web search")
-argp.add_argument("-d", "--dict", default=False, action="store_true", 
-                  help="use dictionary attack")
+argp.add_argument("-d", "--dict", default="", type=str,
+                  help="use dictionary attack difficulty '1'-'4'")
 argp.add_argument("-n", "--dns", default=False, action="store_true", 
                   help="use dns search")
 argp.add_argument("-A", default=False, action="store_true", 
-                  help="Use all searches and attacks")
-argp.add_argument("target", help="Target for example: abcdefg.xyz")
+                  help="Use all searches and attacks \
+                  (Dictionary attack strength: '4')")
+argp.add_argument("target", type=str,
+                  help="Target for example: abcdefg.xyz")
 args = argp.parse_args()
     
 class Domainer:
@@ -61,8 +63,9 @@ class Domainer:
         
         start = Runsearches(www=args.www, dns=args.dns, dic=args.dict, all=args.A)
         domains = start.searches(domainname)
+        print("\n")
         for dom in domains:
-            print(f"{dom}\n")
+            print(dom)
         print("\nA total of " + str(len(domains)) +  " domains have been found!")
         self.askexport(domains)   
         
