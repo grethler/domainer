@@ -33,7 +33,8 @@ class DictionaryAttack:
         elif self.strength == "4":
             strength = "1000000"
             
-        with open(f"{PATH}bitquark_20160227_subdomains_popular_{strength}.txt", "r", encoding="utf-8") as f:
+        with open(f"{PATH}bitquark_20160227_subdomains \
+            _popular_{strength}.txt", "r", encoding="utf-8") as f:
             for line in f.readlines():
                 domains += [line.strip() + domain]
                 
@@ -54,7 +55,8 @@ class DictionaryAttack:
             idx += 1
             
             try:
-                resp = subprocess.check_output(["ping", f"{dom}", "-n", "1"]).decode("utf-8", errors="ignore")
+                subprocess.check_output(["ping", f"{dom}", "-n", "1"]) \
+                .decode("utf-8", errors="ignore")
             except subprocess.CalledProcessError:
                 available = False
             if available: 
