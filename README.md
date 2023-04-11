@@ -1,15 +1,8 @@
 ![license](https://img.shields.io/badge/License-GNU_GPLv3-blue)
 ![python_ci](https://github.com/delsyst0m/domainer/actions/workflows/python.yml/badge.svg)
 ![docker_cd](https://github.com/delsyst0m/domainer/actions/workflows/docker.yml/badge.svg)
-```
-          _                       _                 
-         | |                     (_)               
-       __| | ___  _ __ ___   __ _ _ _ __   ___ _ __
-      / _` |/ _ \| '_ ` _ \ / _` | | '_ \ / _ \ '__|
-     | (_| | (_) | | | | | | (_| | | | | |  __/ |
-      \__,_|\___/|_| |_| |_|\__,_|_|_| |_|\___|_|
-```
 
+<img src="./domainer.png" width="20%">
 
 # Welcome to domainer!
 
