@@ -32,7 +32,7 @@ class DictionaryAttack:
         elif self.strength == "4":
             strength = "1000000"
             
-        with open(f"{os.getcwd()}\\wordlists\bitquark_20160227_subdomains" +
+        with open(f"{os.getcwd()}\\wordlists\\bitquark_20160227_subdomains" +
             f"_popular_{strength}.txt", "r", encoding="utf-8") as f:
             for line in f.readlines():
                 domains += [line.strip() + domain]
