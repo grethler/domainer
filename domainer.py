@@ -67,7 +67,8 @@ class Domainer:
         for dom in domains:
             print(dom)
         print("\nA total of " + str(len(domains)) +  " domains have been found!")
-        self.askexport(domains)   
+        if len(domains) != 0:
+            self.askexport(domains)   
         
 if __name__ == "__main__":
     if not args.www and not args.dict and not args.dns and not args.A:
