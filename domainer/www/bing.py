@@ -33,7 +33,7 @@ class Bingcheck:
         try:
             response = requests.get("https://www.bing.com/")
             if not response.ok:
-               raise Exception 
+                raise Exception 
         except Exception:
             stat = False
         return stat
@@ -57,7 +57,7 @@ class Bingcheck:
                                                   "sb_pagS").text 
                 
             self.browser.get("https://www.bing.com/search?q=site%3A" + 
-                             domain + "&first=" + str(number))
+                            domain + "&first=" + str(number))
                 
             if self.check_element([By.ID, "bnp_cookie_banner"]):
                 self.browser.execute_script(
