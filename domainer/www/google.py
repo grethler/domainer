@@ -100,6 +100,8 @@ class Googlecheck:
                   
             time.sleep(2)
             num += 10
+            if entries == 0:
+                break
             progress += "\rGoogle progress: ["
             perc = int(50*(num/entries))
             for i in range(perc):
