@@ -5,6 +5,7 @@
 # info@grethler.ch
 # www.grethler.ch
 
+import urllib.request
 from domainer.www.google import Googlecheck
 from domainer.www.bing import Bingcheck
 from domainer.dictionary.dict_attack import DictionaryAttack
@@ -15,7 +16,16 @@ class Runsearches:
         self.do_dns = dns
         self.do_dic = dic
         self.do_all = all
-        
+    
+    def check_connection(self, host):
+        """This function checks if the host is reachable.
+        """
+        try:
+            urllib.request.urlopen(host)
+            return True
+        except:
+            return False
+
     def searches(self, domain): 
         """This function takes the arguments and runs the requested searches.
         """
@@ -30,12 +40,12 @@ class Runsearches:
             google = Googlecheck()
             bing = Bingcheck()
             
-            if google.test_connection():
+            if self.check_connection("https://www.google.com/"):
                 for d in google.get_domains(domain):
                     if d not in domains:
                         domains += [d]
                             
-            if bing.test_connection():
+            if self.check_connection("https://www.bing.com/"):
                 for d in bing.get_domains(domain):
                     if d not in domains:
                         domains += [d]

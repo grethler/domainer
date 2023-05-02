@@ -27,16 +27,6 @@ class Bingcheck:
             service=FirefoxService(GeckoDriverManager().install()), 
             options=opts,
             firefox_profile=firefox_profile)
-        
-    def test_connection(self):
-        stat = True
-        try:
-            response = requests.get("https://www.bing.com/")
-            if not response.ok:
-                raise Exception 
-        except Exception:
-            stat = False
-        return stat
     
     def check_element(self, element):
         available = True
@@ -49,33 +39,47 @@ class Bingcheck:
     def get_domains(self, domain):  
         number = 1
         urls = []
-        pages = ""
-        
+        progress = ""
+        print("\nStarting Bing search...")
+        firstsite = True
         while(True):
-            if self.check_element([By.CLASS_NAME, "sb_pagS"]):
-                pages = self.browser.find_element(By.CLASS_NAME, 
-                                                  "sb_pagS").text 
+            try:
+                self.browser.get("https://www.bing.com/search?q=site%3A" + 
+                                domain + "&first=" + str(number))
                 
-            self.browser.get("https://www.bing.com/search?q=site%3A" + 
-                            domain + "&first=" + str(number))
+                if "There are no results for" in self.browser.page_source:
+                    break
                 
-            if self.check_element([By.ID, "bnp_cookie_banner"]):
-                self.browser.execute_script(
-                """const element = document.getElementById("bnp_cookie_banner");
-                    if (element !== null) element.remove();""")
-            
-            for url in self.browser.find_elements(By.TAG_NAME, "cite"):
-                if url.text and domain in url.text:
-                    cleaned_url = (url.text).split("://")[-1].split(domain)[0] + domain
-                    if cleaned_url not in urls:
-                        urls += [cleaned_url]
-            time.sleep(1)    
-            
-            number += 30
-
-            #print((self.browser.find_element(By.CLASS_NAME, 
-            # "sb_count").text).split(" ")[-2].replace(".",""))
-            if pages == self.browser.find_element(By.CLASS_NAME, "sb_pagS").text:
-                break            
+                if self.check_element([By.CLASS_NAME, "sb_count"]) and not firstsite:
+                    nums = self.browser.find_element(By.CLASS_NAME, "sb_count").text.split(" ")
+                    entries = int(nums[-2].replace(".",""))
+                    num = int(nums[0].split("-")[-1].replace(".",""))
+                    perc = int(50*(num/entries))
+                    progress += "\r["
+                    for i in range(perc):
+                        progress += "#"
+                    for i in range(50-perc):
+                        progress += "."
+                    progress += "]"
+                    print(progress, end="")
+                
+                if self.check_element([By.ID, "bnp_cookie_banner"]):
+                    self.browser.execute_script(
+                    """const element = document.getElementById("bnp_cookie_banner");
+                        if (element !== null) element.remove();""")
+                
+                for url in self.browser.find_elements(By.TAG_NAME, "cite"):
+                    if url.text and domain in url.text:
+                        cleaned_url = (url.text).split("://")[-1].split(domain)[0] \
+                        + domain
+                        if cleaned_url not in urls:
+                            urls += [cleaned_url]
+                time.sleep(1)           
+                number += 30
+                firstsite = False
+            except KeyboardInterrupt:
+                break
+                        
         self.browser.quit()
+        print("Finished.")   
         return(urls)

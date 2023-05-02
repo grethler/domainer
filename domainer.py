@@ -8,36 +8,18 @@
 import sys
 import argparse
 from domainer.runsearches import Runsearches
+import urllib.request
 
-argp = argparse.ArgumentParser()
-argp.add_argument("-w", "--www", default=False, action="store_true", 
-                  help="use web search")
-argp.add_argument("-d", "--dict", default="", type=str,
-                  help="use dictionary attack; difficulty '1'-'4'")
-argp.add_argument("-n", "--dns", default=False, action="store_true", 
-                  help="use dns search")
-argp.add_argument("-A", default=False, action="store_true", 
-                  help="Use all searches and attacks \
-                  (Dictionary attack strength: '4')")
-argp.add_argument("target", type=str,
-                  help="Target for example: abcdefg.xyz")
-args = argp.parse_args()
-    
 class Domainer:
     
     def logo(self):
         """This function prints the logo of the script.
         """
-        print("      _                       _\n" +                 
-            "     | |                     (_)\n"+                
-            "   __| | ___  _ __ ___   __ _ _ _ __   ___ _ __\n"+ 
-            "  / _` |/ _ \| '_ ` _ \ / _` | | '_ \ / _ \ '__|\n"+
-            " | (_| | (_) | | | | | | (_| | | | | |  __/ |\n"+   
-            "  \__,_|\___/|_| |_| |_|\__,_|_|_| |_|\___|_|\n\n"+
-            "Made by Florian Grethler @delsyst0m\n"+
-            "info@florian-grethler.de\n"+
-            "www.florian-grethler.de\n\n"                                                 
-            )
+        print("\n __/ _  ____ __   o __ _  __ \n"
+            "(_/_(_)/ / /(_/|_/_/ /(</_/ (_\n\n"+
+            "Made by Florian Grethler\n"+
+            "info@grethler.ch\n"+
+            "www.grethler.ch\n")
     
     def askexport(self, domains):
         """This function asks if the user wants to export the domains as a csv file.
@@ -52,27 +34,47 @@ class Domainer:
         else:
             self.askexport(domains)
 
-    def main(self):  
+    def main(self, target, www, dns, dict, A):  
         """This is the start function of domainer.
         """      
         self.logo()
         
-        domainname = args.target
-        
-        print(f"Searching for subdomains of: {domainname}")
-        
-        start = Runsearches(www=args.www, dns=args.dns, dic=args.dict, all=args.A)
-        domains = start.searches(domainname)
-        print("\n")
-        for dom in domains:
-            print(dom)
-        print("\nA total of " + str(len(domains)) +  " domains have been found!")
-        if len(domains) != 0:
+        print(f"Searching for subdomains of: {target}")
+        print("(Skip or exit with CTRL + C)\n")
+        start = Runsearches(www, dns, dict, A)
+        domains = start.searches(target)
+        if len(domains) != 0: 
+            print("\n") 
+            for dom in domains:
+                print(dom)
+            print("\nA total of " + str(len(domains)) +  " domains have been found!")
             self.askexport(domains)   
+        else:
+            sys.exit("No domains found!")
         
 if __name__ == "__main__":
+    try:
+        urllib.request.urlopen("https://www.google.com/")
+    except:
+        sys.exit("Couldn't connect to internet."+
+                 " Please try again later or check your network settings.")
+    
+    argp = argparse.ArgumentParser()
+    argp.add_argument("-w", "--www", default=False, action="store_true", 
+                    help="use web search")
+    argp.add_argument("-d", "--dict", default="", type=str,
+                    help="use dictionary attack; difficulty '1'-'4'")
+    argp.add_argument("-n", "--dns", default=False, action="store_true", 
+                    help="use dns search")
+    argp.add_argument("-A", default=False, action="store_true", 
+                    help="Use all searches and attacks \
+                    (Dictionary attack strength: '4')")
+    argp.add_argument("target", type=str,
+                    help="Target for example: abcdefg.xyz")
+    args = argp.parse_args()
+
     if not args.www and not args.dict and not args.dns and not args.A:
         sys.exit("Script needs at least one argument besides the target!")
         
     d = Domainer()
-    d.main()
+    d.main(args.target, args.www, args.dns, args.dict, args.A)

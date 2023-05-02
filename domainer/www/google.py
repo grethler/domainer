@@ -27,18 +27,6 @@ class Googlecheck:
             service=FirefoxService(GeckoDriverManager().install()),
             options=opts,
             firefox_profile=firefox_profile)
-        
-    def test_connection(self):
-        """This funtion test if one can connect to the site.
-        """
-        stat = True
-        try:
-            response = requests.get("https://www.google.com/")
-            if not response.ok:
-               raise Exception 
-        except Exception:
-            stat = False
-        return stat
     
     def check_element(self, element):
         """This function checks if an element is available.
@@ -65,54 +53,59 @@ class Googlecheck:
         urls = []
         num = 0   
         entries = ""
-        
+        print("Starting google search...")
         while(True):
-            progress = ""
-            #if not cookie:
-            #    cookie = self.browser.get_cookie("GOOGLE_ABUSE_EXEMPTION")      
-            #self.browser.add_cookie(cookie)
-            
-            self.browser.get("https://www.google.com/search?q=site%3A" 
-                             + domain + "&start=" + str(num))
-            if self.check_element([By.ID, "recaptcha-checkbox-border"]):
-                self.browser.find_element(By.ID, 
-                                          "recaptcha-checkbox-border").click()
+            try:
+                progress = ""
+                #if not cookie:
+                #    cookie = self.browser.get_cookie("GOOGLE_ABUSE_EXEMPTION")      
+                #self.browser.add_cookie(cookie)
                 
-            if self.check_element([By.ID, "W0wltc"]):
-                self.browser.find_element(By.ID, "W0wltc").click()
-            
-            if num == 0:
-                entries = int((self.browser.find_element(By.ID,
-                                                         "result-stats").text)
-                              .split(" ")[1].replace(".", ""))
+                self.browser.get("https://www.google.com/search?q=site%3A" 
+                                + domain + "&start=" + str(num))
+                if self.check_element([By.ID, "recaptcha-checkbox-border"]):
+                    self.browser.find_element(By.ID, 
+                                            "recaptcha-checkbox-border") \
+                                            .click()
                     
-            for url in self.browser.find_elements(By.TAG_NAME, "cite"):
-                if url.text and domain in url.text:
-                    # removes protocol
-                    cleaned_url = url.text.split("//")[-1]
-                    try:
-                        idx = cleaned_url.index("\u203a")
-                        cleaned_url = cleaned_url[:idx]  
-                    except ValueError:
-                        pass   
-                    if cleaned_url not in urls:
-                        urls += [cleaned_url]
-                  
-            time.sleep(2)
-            num += 10
-            if entries == 0:
+                if self.check_element([By.ID, "W0wltc"]):
+                    self.browser.find_element(By.ID, "W0wltc").click()
+                
+                if num == 0:
+                    entries = int((self.browser.find_element(By.ID,
+                                                            "result-stats") \
+                                                            .text)
+                                .split(" ")[1].replace(".", ""))
+                        
+                for url in self.browser.find_elements(By.TAG_NAME, "cite"):
+                    if url.text and domain in url.text:
+                        # removes protocol
+                        cleaned_url = url.text.split("//")[-1]
+                        try:
+                            idx = cleaned_url.index("\u203a")
+                            cleaned_url = cleaned_url[:idx]  
+                        except ValueError:
+                            pass   
+                        if cleaned_url not in urls:
+                            urls += [cleaned_url]
+                    
+                time.sleep(2)
+                num += 10
+                if entries == 0:
+                    break
+                perc = int(50*(num/entries))
+                progress += "\r["
+                for i in range(perc):
+                    progress += "#"
+                for i in range(50-perc):
+                    progress += "."
+                progress += "]"
+                print(progress, end="")
+                
+                if not self.check_element([By.ID, "pnnext"]):
+                    break
+            except KeyboardInterrupt:
                 break
-            progress += "\rGoogle progress: ["
-            perc = int(50*(num/entries))
-            for i in range(perc):
-                progress += "X"
-            for i in range(50-perc):
-                progress += "-"
-            progress += "]"
-            print(progress, end="")
             
-            if not self.check_element([By.ID, "pnnext"]):
-                break
-        print("\n")
-        self.browser.quit()
+        self.browser.quit() 
         return(urls)

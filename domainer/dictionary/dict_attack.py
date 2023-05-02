@@ -22,6 +22,7 @@ class DictionaryAttack:
         strength = ""
         available_Domains = []
         progress = ""
+        print("Starting dictionary attack...")
         
         if self.strength == "1":
             strength = "1000"
@@ -39,26 +40,30 @@ class DictionaryAttack:
                 
         entries = len(domains)
         idx = 1
-        
         for dom in domains:
-            available = True
-            
-            progress += "\rDictionary progress: ["
-            perc = int(50*(idx/entries))
-            for i in range(perc):
-                progress += "X"
-            for i in range(50-perc):
-                progress += "-"
-            progress += "]"
-            print(progress, end="")
-            idx += 1
-            
             try:
-                subprocess.check_output(["ping", f"{dom}", "-n", "1"]) \
-                .decode("utf-8", errors="ignore")
-            except subprocess.CalledProcessError:
-                available = False
-            if available: 
-                available_Domains += [dom]
-        
+                available = True
+                
+                progress += "\r["
+                perc = int(50*(idx/entries))
+                for i in range(perc):
+                    progress += "#"
+                for i in range(50-perc):
+                    progress += "."
+                progress += "]"
+                print(progress, end="")
+                
+                idx += 1
+                try:
+                    subprocess.check_output(["ping", f"{dom}", "-n", "1"]) \
+                    .decode("utf-8", errors="ignore")
+                except subprocess.CalledProcessError:
+                    available = False
+                    
+                if available: 
+                    available_Domains += [dom]        
+            except KeyboardInterrupt:
+                break  
+            
+        print("Finished.")    
         return(available_Domains)        
