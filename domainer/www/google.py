@@ -2,8 +2,8 @@
 #
 # Florian Grethler 2023
 # Github: @delsyst0m
-# info@florian-grethler.de
-# www.florian-grethler.de
+# info@grethler.ch
+# www.grethler.ch
 
 import time
 import requests
