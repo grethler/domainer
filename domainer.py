@@ -13,7 +13,7 @@ argp = argparse.ArgumentParser()
 argp.add_argument("-w", "--www", default=False, action="store_true", 
                   help="use web search")
 argp.add_argument("-d", "--dict", default="", type=str,
-                  help="use dictionary attack difficulty '1'-'4'")
+                  help="use dictionary attack; difficulty '1'-'4'")
 argp.add_argument("-n", "--dns", default=False, action="store_true", 
                   help="use dns search")
 argp.add_argument("-A", default=False, action="store_true", 
@@ -51,7 +51,7 @@ class Domainer:
             sys.exit(0)
         else:
             self.askexport(domains)
-            
+
     def main(self):  
         """This is the start function of domainer.
         """      
@@ -59,7 +59,7 @@ class Domainer:
         
         domainname = args.target
         
-        print("Searching for subdomains of: " + domainname)
+        print(f"Searching for subdomains of: {domainname}")
         
         start = Runsearches(www=args.www, dns=args.dns, dic=args.dict, all=args.A)
         domains = start.searches(domainname)
