@@ -16,7 +16,7 @@ class Domainer:
         """This function prints the logo of the script.
         """
         print("\n __/ _  ____ __   o __ _  __ \n"
-            "(_/_(_)/ / /(_/|_/_/ /(</_/ (_\n\n"+
+            "(_/_(_)/ / /(_/|_/_/ /(<_/ (_\n\n"+
             "Made by Florian Grethler\n"+
             "info@grethler.ch\n"+
             "www.grethler.ch\n")
@@ -40,7 +40,7 @@ class Domainer:
         self.logo()
         
         print(f"Searching for subdomains of: {target}")
-        print("(Skip or exit with CTRL + C)\n")
+        print("(Skip with CTRL + C)\n")
         start = Runsearches(www, dns, dict, A)
         domains = start.searches(target)
         if len(domains) != 0: 

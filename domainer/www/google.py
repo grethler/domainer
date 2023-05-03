@@ -93,11 +93,11 @@ class Googlecheck:
                 num += 10
                 if entries == 0:
                     break
-                perc = int(50*(num/entries))
+                perc = int(100*(num/entries))
                 progress += "\r["
                 for i in range(perc):
                     progress += "#"
-                for i in range(50-perc):
+                for i in range(100-perc):
                     progress += "."
                 progress += "]"
                 print(progress, end="")
@@ -105,6 +105,7 @@ class Googlecheck:
                 if not self.check_element([By.ID, "pnnext"]):
                     break
             except KeyboardInterrupt:
+                print("\nSkipping...")
                 break
             
         self.browser.quit() 

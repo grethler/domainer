@@ -54,14 +54,17 @@ class Bingcheck:
                     nums = self.browser.find_element(By.CLASS_NAME, "sb_count").text.split(" ")
                     entries = int(nums[-2].replace(".",""))
                     num = int(nums[0].split("-")[-1].replace(".",""))
-                    perc = int(50*(num/entries))
+                    perc = int(100*(num/entries))
+                    print(num, entries)
                     progress += "\r["
                     for i in range(perc):
                         progress += "#"
-                    for i in range(50-perc):
+                    for i in range(100-perc):
                         progress += "."
                     progress += "]"
                     print(progress, end="")
+                    if num >= entries:
+                        break
                 
                 if self.check_element([By.ID, "bnp_cookie_banner"]):
                     self.browser.execute_script(
@@ -78,6 +81,7 @@ class Bingcheck:
                 number += 30
                 firstsite = False
             except KeyboardInterrupt:
+                print("\nSkipping...")
                 break
                         
         self.browser.quit()
