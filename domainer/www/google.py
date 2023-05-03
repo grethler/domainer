@@ -105,7 +105,7 @@ class Googlecheck:
                 if not self.check_element([By.ID, "pnnext"]):
                     break
             except KeyboardInterrupt:
-                print("\nSkipping...")
+                print("\nSkipping.")
                 break
             
         self.browser.quit() 

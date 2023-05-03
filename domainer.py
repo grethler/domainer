@@ -40,7 +40,7 @@ class Domainer:
         self.logo()
         
         print(f"Searching for subdomains of: {target}")
-        print("(Skip with CTRL + C)\n")
+        print("(Skip step with CTRL + C)\n")
         start = Runsearches(www, dns, dict, A)
         domains = start.searches(target)
         if len(domains) != 0: 

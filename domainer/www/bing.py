@@ -81,7 +81,7 @@ class Bingcheck:
                 number += 30
                 firstsite = False
             except KeyboardInterrupt:
-                print("\nSkipping...")
+                print("\nSkipping.")
                 break
                         
         self.browser.quit()
