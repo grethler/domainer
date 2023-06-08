@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-#
-# Florian Grethler 2023
-# Github: @delsyst0m
-# info@grethler.ch
-# www.grethler.ch
 
-import requests
 import time
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
@@ -22,7 +16,8 @@ class Bingcheck:
         opts.add_argument("--disable-gpu")
         opts.set_preference('intl.accept_languages', 'en-GB')
         firefox_profile = FirefoxProfile()
-        firefox_profile.set_preference("browser.privatebrowsing.autostart", True)
+        firefox_profile.set_preference("browser.privatebrowsing.autostart",
+                                       True)
         self.browser = webdriver.Firefox(
             service=FirefoxService(GeckoDriverManager().install()), 
             options=opts,
@@ -51,7 +46,8 @@ class Bingcheck:
                     break
                 
                 if self.check_element([By.CLASS_NAME, "sb_count"]) and not firstsite:
-                    nums = self.browser.find_element(By.CLASS_NAME, "sb_count").text.split(" ")
+                    nums = self.browser.find_element(By.CLASS_NAME, "sb_count") \
+                        .text.split(" ")
                     entries = int(nums[-2].replace(".",""))
                     num = int(nums[0].split("-")[-1].replace(".",""))
                     perc = int(100*(num/entries))

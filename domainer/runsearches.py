@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-#
-# Florian Grethler 2023
-# Github: @delsyst0m
-# info@grethler.ch
-# www.grethler.ch
 
 import urllib.request
 from domainer.www.google import Googlecheck
@@ -23,7 +18,7 @@ class Runsearches:
         try:
             urllib.request.urlopen(host)
             return True
-        except:
+        except urllib.error.URLError:
             return False
 
     def searches(self, domain): 

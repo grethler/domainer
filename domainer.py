@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-#
-# Florian Grethler 2023
-# Github: @delsyst0m
-# info@grethler.ch
-# www.grethler.ch
 
 import sys
 import argparse
@@ -53,12 +48,6 @@ class Domainer:
             sys.exit("No domains found!")
         
 if __name__ == "__main__":
-    try:
-        urllib.request.urlopen("https://www.google.com/")
-    except:
-        sys.exit("Couldn't connect to internet."+
-                 " Please try again later or check your network settings.")
-    
     argp = argparse.ArgumentParser()
     argp.add_argument("-w", "--www", default=False, action="store_true", 
                     help="use web search")
@@ -75,6 +64,12 @@ if __name__ == "__main__":
 
     if not args.www and not args.dict and not args.dns and not args.A:
         sys.exit("Script needs at least one argument besides the target!")
-        
+    
+    try:
+        urllib.request.urlopen("https://www.google.com/")
+    except urllib.error.URLError:
+        sys.exit("ERROR: Couldn't connect to internet."+
+                 " Please try again later or check your network settings.")
+          
     d = Domainer()
     d.main(args.target, args.www, args.dns, args.dict, args.A)

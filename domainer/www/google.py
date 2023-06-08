@@ -1,12 +1,6 @@
 #!/usr/bin/env python3
-#
-# Florian Grethler 2023
-# Github: @delsyst0m
-# info@grethler.ch
-# www.grethler.ch
 
 import time
-import requests
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service as FirefoxService

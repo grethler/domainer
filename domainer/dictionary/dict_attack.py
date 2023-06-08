@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-#
-# Florian Grethler 2023
-# Github: @delsyst0m
-# info@grethler.ch
-# www.grethler.ch
 
 import os
 import subprocess
