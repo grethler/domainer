@@ -37,25 +37,11 @@ class Duckduckgocheck:
                                 domain)
         while(True):
             try:
-                self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-                """if self.check_element([By.CLASS_NAME, "sb_count"]) and not firstsite:
-                    nums = self.browser.find_element(By.CLASS_NAME, "sb_count") \
-                        .text.split(" ")
-                    entries = int(nums[-2].replace(".",""))
-                    num = int(nums[0].split("-")[-1].replace(".",""))
-                    perc = int(100*(num/entries))
-                    print(num, entries)
-                    progress += "\r["
-                    for i in range(perc):
-                        progress += "#"
-                    for i in range(100-perc):
-                        progress += "."
-                    progress += "]"
-                    print(progress, end="")
-                    if num >= entries:
-                        break"""
+                self.browser.execute_script("window.scrollTo \
+                    (0, document.body.scrollHeight);")
                 
-                for url in self.browser.find_elements(By.CLASS_NAME, "Rn_JXVtoPVAFyGkcaXyK"):
+                for url in self.browser.find_elements(By.CLASS_NAME, 
+                                                      "Rn_JXVtoPVAFyGkcaXyK"):
                     if url.text and domain in url.text:
                         cleaned_url = (url.text).split("://")[-1].split(domain)[0] \
                         + domain
@@ -63,7 +49,8 @@ class Duckduckgocheck:
                             print(cleaned_url)
                             urls += [cleaned_url]
                 try:
-                    self.browser.find_element(By.CLASS_NAME, "wE5p3MOcL8UVdJhgH3V1").click()         
+                    self.browser.find_element(By.CLASS_NAME, 
+                                              "wE5p3MOcL8UVdJhgH3V1").click()         
                 except NoSuchElementException:
                     break
                 
