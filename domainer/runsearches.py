@@ -3,6 +3,7 @@
 import urllib.request
 from domainer.www.google import Googlecheck
 from domainer.www.bing import Bingcheck
+from domainer.www.duckduckgo import Duckduckgocheck
 from domainer.dictionary.dict_attack import DictionaryAttack
 
 class Runsearches:
@@ -34,6 +35,7 @@ class Runsearches:
         if self.do_www:
             google = Googlecheck()
             bing = Bingcheck()
+            ddg = Duckduckgocheck()
             
             if self.check_connection("https://www.google.com/"):
                 for d in google.get_domains(domain):
@@ -44,6 +46,12 @@ class Runsearches:
                 for d in bing.get_domains(domain):
                     if d not in domains:
                         domains += [d]
+                        
+            if self.check_connection("https://www.duckduckgo.com/"):
+                for d in ddg.get_domains(domain):
+                    if d not in domains:
+                        domains += [d]
+        
         
         if self.do_dns:
             # Work in progress
