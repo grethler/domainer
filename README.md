@@ -2,7 +2,7 @@
 ![python_ci](https://github.com/delsyst0m/domainer/actions/workflows/python.yml/badge.svg)
 ![docker_cd](https://github.com/delsyst0m/domainer/actions/workflows/docker.yml/badge.svg)
 
-<img src="./domainer.png" width="20%">
+<img src="./domainer.png" width="70%">
 
 # Welcome to domainer!
 
