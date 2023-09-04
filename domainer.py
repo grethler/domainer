@@ -12,7 +12,7 @@ class Domainer:
         """
         print("\n __/ _  ____ __   o __ _  __ \n"
             "(_/_(_)/ / /(_/|_/_/ /(<_/ (_\n\n"+
-            "Made by @grethler")
+            "Made by @delbra1n")
     
     def askexport(self, domains):
         """This function asks if the user wants to export the domains as a csv file.
