@@ -26,39 +26,49 @@ class Domainer:
         else:
             self.askexport(domains)
 
-    def main(self, target, www, dns, dict, A):  
+    def main(self, target, www, dns, dict, threads):  
         """
         This is the start function of domainer.
         """      
         self.logo()
 
         print(f"[i] Searching for subdomains of: {target}")
-        print("[i] Skip step with CTRL + C")
-        start = Runsearches(www, dns, dict, A)
+        start = Runsearches(www, dns, dict, threads)
         domains = start.searches(target)
-        if len(domains) != 0: 
+        if len(domains) > 0: 
             print("[i] A total of " + str(len(domains)) +  " domains have been found!")
             self.askexport(domains)   
         else:
-            sys.exit("[!] No domains found!")
+            print("[!] No domains found!")
 
 if __name__ == "__main__":
     argp = argparse.ArgumentParser()
     argp.add_argument("-w", "--www", default=False, action="store_true", 
                     help="use web search")
-    argp.add_argument("-d", "--dict", default="", type=str,
+    argp.add_argument("-d", "--dict", default="1", type=str,
                     help="use dictionary attack; difficulty '1'-'4'")
+    argp.add_argument("-t", "--threads", default="1", type=str, 
+                    help="Number of threads used for dictionary attack")
     argp.add_argument("-n", "--dns", default=False, action="store_true", 
                     help="use dns search")
-    argp.add_argument("-A", default=False, action="store_true", 
-                    help="Use all searches and attacks \
-                    (Dictionary attack strength: '4')")
     argp.add_argument("target", type=str,
                     help="Target for example: abcdefg.xyz")
     args = argp.parse_args()
 
-    if not args.www and not args.dict and not args.dns and not args.A:
+    args.threads = int(args.threads)
+    args.dict = int(args.dict)
+    
+    if not args.www and not args.dict and not args.dns:
         sys.exit("[!] Script needs at least one argument besides the target!")
+
+    if int(args.dict) < 1 or int(args.dict) > 4:
+        sys.exit("[!] Dictionary attack difficulty must be between 1 and 4!") 
+
+    if args.threads < 1:
+        sys.exit("[!] Number of threads must be at least 1!")
+
+    if args.threads and not args.dict:
+        sys.exit("[!] Number of threads can only be used with dictionary attack!")
 
     try:
         urllib.request.urlopen("https://www.google.com/")
@@ -67,4 +77,4 @@ if __name__ == "__main__":
                     " Please try again later or check your network settings.")
 
     d = Domainer()
-    d.main(args.target, args.www, args.dns, args.dict, args.A)
+    d.main(args.target, args.www, args.dns, args.dict, args.threads)

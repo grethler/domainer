@@ -5,11 +5,11 @@ from domainer.www.duckduckgo import Duckduckgocheck
 from domainer.dictionary.dict_attack import DictionaryAttack
 
 class Runsearches:
-    def __init__(self, www, dns, dic, all):
+    def __init__(self, www, dns, dic, threads):
         self.do_www = www
         self.do_dns = dns
         self.do_dic = dic
-        self.do_all = all
+        self.threads = threads
 
     def check_connection(self, host):
         """
@@ -26,11 +26,6 @@ class Runsearches:
         This function takes the arguments and runs the requested searches.
         """
         domains = []
-
-        if self.do_all:
-            self.do_www = True
-            self.do_dns = True
-            self.do_dic = "4"
 
         if self.do_www:
             google = Googlecheck()
@@ -57,7 +52,7 @@ class Runsearches:
             pass
 
         if self.do_dic:
-            da = DictionaryAttack(self.do_dic)
+            da = DictionaryAttack(self.do_dic, self.threads)
             for d in da.get_domains(domain):
                 if d not in domains:
                     domains += [d]

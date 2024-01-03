@@ -1,46 +1,77 @@
 import os
+import threading
 import subprocess
 
 class DictionaryAttack:
-    def __init__(self, strength):
+    available_Domains: list = []
+
+    def __init__(self, strength: int, threads: int):
         self.strength = strength
+        self.threads = threads
 
-    def get_domains(self, domain):
-        """
-        This function uses a dictionary to test different domains.
-        """
+    def enumerateList(self, domains: list):
+        for dom in domains:
+            available = True
+            print(dom)
+            try:
+                subprocess.check_output(["ping", f"{dom}", "-n", "1"]) \
+                .decode("utf-8", errors="ignore")
+            except subprocess.CalledProcessError:
+                available = False
+            if available: 
+                print(f"[+] Domain found: {dom}")
+                self.available_Domains.append(dom)
 
+    def get_domains(self, domain: str) -> list:
         domain = f".{domain}"
         domains = []
         strength = ""
-        available_Domains = []
+
         print("[i] Starting dictionary attack...")
 
-        if self.strength == "1":
-            strength = "1000"
-        elif self.strength == "2":
-            strength = "10000"
-        elif self.strength == "3":
-            strength = "100000"
-        elif self.strength == "4":
-            strength = "1000000"
+        # Set strength based on input
+        match self.strength:
+            case 1:
+                strength = 1000
+            case 2:
+                strength = 10000
+            case 3:
+                strength = 100000
+            case 4:
+                strength = 1000000
 
         with open(f"{os.getcwd()}/wordlists/bitquark_20160227_subdomains" +
-            f"_popular_{strength}.txt", "r", encoding="utf-8") as f:
+                    f"_popular_{strength}.txt", "r", encoding="utf-8") as f:
             for line in f.readlines():
-                domains += [line.strip() + domain]
-        for dom in domains:
-            try:
-                available = True
-                try:
-                    subprocess.check_output(["ping", f"{dom}", "-n", "1"]) \
-                    .decode("utf-8", errors="ignore")
-                except subprocess.CalledProcessError:
-                    available = False
-                if available: 
-                    print(f"[+] Domain found: {dom}")
-                    available_Domains += [dom]        
-            except KeyboardInterrupt:
-                break  
+                domains.append(line.strip() + domain)
+
+        if self.threads > 1:
+            # Calculate chunks for threading
+            avg = len(domains) // self.threads
+            remainder = len(domains) % self.threads
+            result = []
+            start = 0
+
+            for i in range(self.threads):
+                if i < remainder:
+                    end = start + avg + 1
+                else:
+                    end = start + avg
+
+                result.append(domains[start:end])
+                start = end
+
+            threads = []
+            for part in result:
+                thread = threading.Thread(target=self.enumerateList, args=(part,))
+                threads.append(thread)
+                thread.start() 
+
+            # Wait for all threads to complete
+            for thread in threads:
+                thread.join()
+        else:
+            self.enumerateList(domains)
+
         print("[i] Finished.")    
-        return(available_Domains)        
+        return self.available_Domains
