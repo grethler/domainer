@@ -12,7 +12,6 @@ class DictionaryAttack:
     def enumerateList(self, domains: list):
         for dom in domains:
             available = True
-            print(dom)
             try:
                 subprocess.check_output(["ping", f"{dom}", "-n", "1"]) \
                 .decode("utf-8", errors="ignore")
@@ -73,5 +72,5 @@ class DictionaryAttack:
         else:
             self.enumerateList(domains)
 
-        print("[i] Finished.")    
+        print("[i] Dictionary attack finished.")    
         return self.available_Domains
