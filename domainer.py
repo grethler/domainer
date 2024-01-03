@@ -6,11 +6,12 @@ from domainer.runsearches import Runsearches
 class Domainer:
 
     def logo(self):
-        """This function prints the logo of the script.
+        """
+        This function prints the logo of the script.
         """
         print("\n __/ _  ____ __   o __ _  __ \n"
             "(_/_(_)/ / /(_/|_/_/ /(<_/ (_\n"+
-            "Made by @delbra1n\n")
+            "Made by Florian Grethler\n")
 
     def askexport(self, domains):
         """
@@ -26,7 +27,7 @@ class Domainer:
         else:
             self.askexport(domains)
 
-    def main(self, target, www, dns, dict, threads):  
+    def main(self, target, www, db, dict, threads):  
         """
         This is the start function of domainer.
         """      
@@ -34,13 +35,14 @@ class Domainer:
 
         print(f"[i] Searching for subdomains of: {target}")
         print("[i] Step may be stopped with CTRL+C")
-        start = Runsearches(www, dns, dict, threads)
+        start = Runsearches(www, db, dict, threads)
         domains = start.searches(target)
         if len(domains) > 0: 
             print("[i] A total of " + str(len(domains)) +  " domains have been found!")
             self.askexport(domains)   
         else:
             print("[!] No domains found!")
+        # add checking here
 
 if __name__ == "__main__":
     argp = argparse.ArgumentParser()
@@ -50,8 +52,8 @@ if __name__ == "__main__":
                     help="use dictionary attack; difficulty '1'-'4'")
     argp.add_argument("-t", "--threads", default="1", type=str, 
                     help="Number of threads used for dictionary attack")
-    argp.add_argument("-n", "--dns", default=False, action="store_true", 
-                    help="use dns search")
+    argp.add_argument("-b", "--db", default=False, action="store_true", 
+                    help="use db search")
     argp.add_argument("target", type=str,
                     help="Target for example: abcdefg.xyz")
     args = argp.parse_args()
@@ -59,7 +61,7 @@ if __name__ == "__main__":
     args.threads = int(args.threads)
     args.dict = int(args.dict)
     
-    if not args.www and not args.dict and not args.dns:
+    if not args.www and not args.dict and not args.db:
         sys.exit("[!] Script needs at least one argument besides the target!")
 
     if int(args.dict) < 1 or int(args.dict) > 4:
@@ -78,4 +80,4 @@ if __name__ == "__main__":
                     " Please try again later or check your network settings.")
 
     d = Domainer()
-    d.main(args.target, args.www, args.dns, args.dict, args.threads)
+    d.main(args.target, args.www, args.db, args.dict, args.threads)

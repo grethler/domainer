@@ -5,9 +5,9 @@ from domainer.www.duckduckgo import Duckduckgocheck
 from domainer.dictionary.dict_attack import DictionaryAttack
 
 class Runsearches:
-    def __init__(self, www, dns, dic, threads):
+    def __init__(self, www, db, dic, threads):
         self.do_www = www
-        self.do_dns = dns
+        self.do_db = db
         self.do_dic = dic
         self.threads = threads
 
@@ -47,7 +47,7 @@ class Runsearches:
                     if d not in domains:
                         domains += [d]
 
-        if self.do_dns:
+        if self.do_db:
             # Work in progress
             pass
 

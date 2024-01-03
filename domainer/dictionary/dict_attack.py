@@ -10,6 +10,9 @@ class DictionaryAttack:
         self.threads = threads
 
     def enumerateList(self, domains: list):
+        """
+        Enumerate a list of domains and check if they are available.
+        """
         for dom in domains:
             available = True
             try:
@@ -22,6 +25,9 @@ class DictionaryAttack:
                 self.available_Domains.append(dom)
 
     def get_domains(self, domain: str) -> list:
+        """
+        Does a dictionary attack on the given domain for subdomains.
+        """
         domain = f".{domain}"
         domains = []
         strength = ""
