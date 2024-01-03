@@ -5,7 +5,7 @@ from domainer.runsearches import Runsearches
 
 class Domainer:
 
-    def logo(self):
+    def logo(self) -> None:
         """
         This function prints the logo of the script.
         """
@@ -13,7 +13,7 @@ class Domainer:
             "(_/_(_)/ / /(_/|_/_/ /(<_/ (_\n"+
             "Made by Florian Grethler\n")
 
-    def askexport(self, domains):
+    def askexport(self, domains: list) -> None:
         """
         This function asks if the user wants to export the domains as a csv file.
         """
@@ -27,7 +27,7 @@ class Domainer:
         else:
             self.askexport(domains)
 
-    def main(self, target, www, db, dict, threads):  
+    def main(self, target: str, www: bool, db: bool, dict: int, threads: int) -> None:  
         """
         This is the start function of domainer.
         """      

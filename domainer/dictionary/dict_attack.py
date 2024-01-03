@@ -9,7 +9,7 @@ class DictionaryAttack:
         self.strength = strength
         self.threads = threads
 
-    def enumerateList(self, domains: list):
+    def enumerateList(self, domains: list) -> None:
         """
         Enumerate a list of domains and check if they are available.
         """

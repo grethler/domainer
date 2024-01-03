@@ -5,13 +5,13 @@ from domainer.www.duckduckgo import Duckduckgocheck
 from domainer.dictionary.dict_attack import DictionaryAttack
 
 class Runsearches:
-    def __init__(self, www, db, dic, threads):
+    def __init__(self, www: bool, db: bool, dic: int, threads: int):
         self.do_www = www
         self.do_db = db
         self.do_dic = dic
         self.threads = threads
 
-    def check_connection(self, host):
+    def check_connection(self, host: str) -> bool:
         """
         This function checks if the host is reachable.
         """
@@ -21,7 +21,7 @@ class Runsearches:
         except urllib.error.URLError:
             return False
 
-    def searches(self, domain): 
+    def searches(self, domain: str) -> list: 
         """
         This function takes the arguments and runs the requested searches.
         """
