@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import time
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
@@ -17,12 +15,12 @@ class Bingcheck:
         opts.set_preference('intl.accept_languages', 'en-GB')
         firefox_profile = FirefoxProfile()
         firefox_profile.set_preference("browser.privatebrowsing.autostart",
-                                       True)
+                                        True)
         self.browser = webdriver.Firefox(
             service=FirefoxService(GeckoDriverManager().install()), 
             options=opts,
             firefox_profile=firefox_profile)
-    
+
     def check_element(self, element):
         available = True
         try:
@@ -30,43 +28,33 @@ class Bingcheck:
         except NoSuchElementException:
             available = False
         return(available)
-    
+
     def get_domains(self, domain):  
         number = 1
         urls = []
-        progress = ""
         print("\nStarting Bing search...")
         firstsite = True
         while(True):
             try:
                 self.browser.get("https://www.bing.com/search?q=site%3A" + 
                                 domain + "&first=" + str(number))
-                
+
                 if "There are no results for" in self.browser.page_source:
                     break
-                
+
                 if self.check_element([By.CLASS_NAME, "sb_count"]) and not firstsite:
                     nums = self.browser.find_element(By.CLASS_NAME, "sb_count") \
                         .text.split(" ")
                     entries = int(nums[-2].replace(".",""))
                     num = int(nums[0].split("-")[-1].replace(".",""))
-                    perc = int(100*(num/entries))
-                    print(num, entries)
-                    progress += "\r["
-                    for i in range(perc):
-                        progress += "#"
-                    for i in range(100-perc):
-                        progress += "."
-                    progress += "]"
-                    print(progress, end="")
                     if num >= entries:
                         break
-                
+
                 if self.check_element([By.ID, "bnp_cookie_banner"]):
                     self.browser.execute_script(
                     """const element = document.getElementById("bnp_cookie_banner");
                         if (element !== null) element.remove();""")
-                
+
                 for url in self.browser.find_elements(By.TAG_NAME, "cite"):
                     if url.text and domain in url.text:
                         cleaned_url = (url.text).split("://")[-1].split(domain)[0] \
@@ -79,7 +67,7 @@ class Bingcheck:
             except KeyboardInterrupt:
                 print("\nSkipping.")
                 break
-                        
+
         self.browser.quit()
         print("Finished.")   
         return(urls)

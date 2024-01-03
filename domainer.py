@@ -1,23 +1,22 @@
-#!/usr/bin/env python3
-
 import sys
 import argparse
-from domainer.runsearches import Runsearches
 import urllib.request
+from domainer.runsearches import Runsearches
 
 class Domainer:
-    
+
     def logo(self):
         """This function prints the logo of the script.
         """
         print("\n __/ _  ____ __   o __ _  __ \n"
-            "(_/_(_)/ / /(_/|_/_/ /(<_/ (_\n\n"+
-            "Made by @delbra1n")
-    
+            "(_/_(_)/ / /(_/|_/_/ /(<_/ (_\n"+
+            "Made by @delbra1n\n")
+
     def askexport(self, domains):
-        """This function asks if the user wants to export the domains as a csv file.
         """
-        export  = input("\nDo you want to export them? (Y/N)\n")
+        This function asks if the user wants to export the domains as a csv file.
+        """
+        export  = input("[i] Do you want to export them? (Y/N)\n")
         if export == "Y" or export == "y":
             f = open("domains.csv")
             for i in domains:
@@ -28,23 +27,21 @@ class Domainer:
             self.askexport(domains)
 
     def main(self, target, www, dns, dict, A):  
-        """This is the start function of domainer.
+        """
+        This is the start function of domainer.
         """      
         self.logo()
-        
-        print(f"Searching for subdomains of: {target}")
-        print("(Skip step with CTRL + C)\n")
+
+        print(f"[i] Searching for subdomains of: {target}")
+        print("[i] Skip step with CTRL + C")
         start = Runsearches(www, dns, dict, A)
         domains = start.searches(target)
         if len(domains) != 0: 
-            print("\n") 
-            for dom in domains:
-                print(dom)
-            print("\nA total of " + str(len(domains)) +  " domains have been found!")
+            print("[i] A total of " + str(len(domains)) +  " domains have been found!")
             self.askexport(domains)   
         else:
-            sys.exit("No domains found!")
-        
+            sys.exit("[!] No domains found!")
+
 if __name__ == "__main__":
     argp = argparse.ArgumentParser()
     argp.add_argument("-w", "--www", default=False, action="store_true", 
@@ -61,13 +58,13 @@ if __name__ == "__main__":
     args = argp.parse_args()
 
     if not args.www and not args.dict and not args.dns and not args.A:
-        sys.exit("Script needs at least one argument besides the target!")
-    
+        sys.exit("[!] Script needs at least one argument besides the target!")
+
     try:
         urllib.request.urlopen("https://www.google.com/")
     except urllib.error.URLError:
-        sys.exit("ERROR: Couldn't connect to internet."+
-                 " Please try again later or check your network settings.")
-          
+        sys.exit("[!] Couldn't connect to internet." +
+                    " Please try again later or check your network settings.")
+
     d = Domainer()
     d.main(args.target, args.www, args.dns, args.dict, args.A)
