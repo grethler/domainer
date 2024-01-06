@@ -1,6 +1,6 @@
 ![license](https://img.shields.io/badge/License-GNU_GPLv3-blue)
-![python_ci](https://github.com/delsyst0m/domainer/actions/workflows/python.yml/badge.svg)
-![docker_cd](https://github.com/delsyst0m/domainer/actions/workflows/docker.yml/badge.svg)
+![python_ci](https://github.com/grethler/domainer/actions/workflows/python.yml/badge.svg)
+![docker_cd](https://github.com/grethler/domainer/actions/workflows/docker.yml/badge.svg)
 
 <img src="./domainer.png" width="50%">
 
@@ -14,7 +14,8 @@ For example instead of `https://www.github.com` use `github.com`
 
 ## Clone repository:
 ```bash
-git clone https://github.com/delbra1n/domainer
+git clone https://github.com/grethler/domainer
+cd ./domainer
 ```
 
 ## Install dependencies:
