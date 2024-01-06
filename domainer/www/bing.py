@@ -1,4 +1,5 @@
 import time
+import warnings
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service as FirefoxService
@@ -6,6 +7,8 @@ from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from webdriver_manager.firefox import GeckoDriverManager
+
+warnings.filterwarnings("ignore", category=DeprecationWarning) 
 
 class Bingcheck:
     def __init__(self, logger):

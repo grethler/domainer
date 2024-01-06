@@ -1,7 +1,6 @@
 import sys
 import argparse
 import logging
-import logging.handlers
 import urllib.request
 from domainer.runsearches import Runsearches
 
@@ -11,12 +10,9 @@ class Domainer:
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.ERROR)
         self.formatter = logging.Formatter("[%(asctime)s] %(message)s")
-        handler = logging.handlers.RotatingFileHandler(
-            filename=f"./logs/{self.logger}.log", maxBytes=5 * 1024 * 1024, backupCount=5
-        )
-        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-        handler.setFormatter(formatter)
-        self.logger.addHandler(handler)
+        self.stream_handler = logging.StreamHandler()
+        self.stream_handler.setFormatter(self.formatter)
+        self.logger.addHandler(self.stream_handler)
 
     def logo(self) -> None:
         """
@@ -47,8 +43,9 @@ class Domainer:
         self.logo()
 
         print(f"[i] Searching for subdomains of: {target}")
-        print("[i] Step may be stopped with CTRL+C")
-        start = Runsearches(www, db, dict, threads, self.logger)
+        #print("[i] Step may be stopped with CTRL+C")
+        start = Runsearches(www=www, db=db, dic=dict, 
+                            threads=threads, logger=self.logger)
         domains = start.searches(target)
         if len(domains) > 0: 
             print("[i] A total of " + str(len(domains)) +  " domains have been found!")
@@ -61,9 +58,9 @@ if __name__ == "__main__":
     argp = argparse.ArgumentParser()
     argp.add_argument("-w", "--www", default=False, action="store_true", 
                     help="use web search")
-    argp.add_argument("-d", "--dict", default="1", type=str,
+    argp.add_argument("-d", "--dict", default="0", type=str,
                     help="use dictionary attack; difficulty '1'-'4'")
-    argp.add_argument("-t", "--threads", default="1", type=str, 
+    argp.add_argument("-t", "--threads", default="0", type=str, 
                     help="Number of threads used for dictionary attack")
     argp.add_argument("-b", "--db", default=False, action="store_true", 
                     help="use db search")
@@ -77,10 +74,10 @@ if __name__ == "__main__":
     if not args.www and not args.dict and not args.db:
         sys.exit("[!] Script needs at least one argument besides the target!")
 
-    if int(args.dict) < 1 or int(args.dict) > 4:
+    if args.dict and (int(args.dict) < 1 or int(args.dict) > 4):
         sys.exit("[!] Dictionary attack difficulty must be between 1 and 4!") 
 
-    if args.threads < 1:
+    if args.threads and args.threads < 1:
         sys.exit("[!] Number of threads must be at least 1!")
 
     if args.threads and not args.dict:
@@ -93,4 +90,5 @@ if __name__ == "__main__":
                     " Please try again later or check your network settings.")
 
     d = Domainer()
-    d.main(args.target, args.www, args.db, args.dict, args.threads)
+    d.main(target=args.target, www=args.www, db=args.db, 
+           dict=args.dict, threads=args.threads)
