@@ -7,9 +7,9 @@ from selenium.common.exceptions import NoSuchElementException
 from webdriver_manager.firefox import GeckoDriverManager
 
 class Duckduckgocheck:
-    def __init__(self):
+    def __init__(self, logger):
         opts = Options()
-        #opts.add_argument("--headless")
+        opts.add_argument("--headless")
         opts.add_argument("--disable-gpu")
         opts.set_preference('intl.accept_languages', 'en-GB')
         firefox_profile = FirefoxProfile()
@@ -19,6 +19,7 @@ class Duckduckgocheck:
             service=FirefoxService(GeckoDriverManager().install()), 
             options=opts,
             firefox_profile=firefox_profile)
+        self.logger = logger
 
     def check_element(self, element):
         available = True
@@ -52,8 +53,8 @@ class Duckduckgocheck:
                 except NoSuchElementException:
                     break
 
-            except KeyboardInterrupt:
-                print("\nSkipping.")
+            except Exception as e:
+                self.logger.error(f"Couldn't read DuckDuckGo: {e}")
                 break
 
         self.browser.quit()

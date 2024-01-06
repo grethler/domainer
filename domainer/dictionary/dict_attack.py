@@ -5,9 +5,10 @@ import subprocess
 class DictionaryAttack:
     available_Domains: list[str]
 
-    def __init__(self, strength: int, threads: int):
+    def __init__(self, strength: int, threads: int, logger):
         self.strength = strength
         self.threads = threads
+        self.logger = logger
 
     def enumerateList(self, domains: list) -> None:
         """

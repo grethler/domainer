@@ -6,11 +6,12 @@ from domainer.dictionary.dict_attack import DictionaryAttack
 from domainer.dbs.db import CheckDBs
 
 class Runsearches:
-    def __init__(self, www: bool, db: bool, dic: int, threads: int):
+    def __init__(self, www: bool, db: bool, dic: int, threads: int, logger):
         self.do_www = www
         self.do_db = db
         self.do_dic = dic
         self.threads = threads
+        self.logger = logger
 
     def check_connection(self, host: str) -> bool:
         """
@@ -29,9 +30,9 @@ class Runsearches:
         domains = []
 
         if self.do_www:
-            google = Googlecheck()
-            bing = Bingcheck()
-            ddg = Duckduckgocheck()
+            google = Googlecheck(self.logger)
+            bing = Bingcheck(self.logger)
+            ddg = Duckduckgocheck(self.logger)
 
             if self.check_connection("https://www.google.com/"):
                 for d in google.get_domains(domain):
@@ -49,13 +50,13 @@ class Runsearches:
                         domains += [d]
 
         if self.do_db:
-            db = CheckDBs(domain)
+            db = CheckDBs(domain, self.logger)
             for d in db.get_domains():
                 if d not in domains:
                     domains += [d]
 
         if self.do_dic:
-            da = DictionaryAttack(self.do_dic, self.threads)
+            da = DictionaryAttack(self.do_dic, self.threads, self.logger)
             for d in da.get_domains(domain):
                 if d not in domains:
                     domains += [d]

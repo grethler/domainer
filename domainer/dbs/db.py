@@ -13,9 +13,10 @@ from webdriver_manager.firefox import GeckoDriverManager
 warnings.filterwarnings("ignore", category=DeprecationWarning) 
 
 class CheckDBs:
-    def __init__(self, domain: str):
+    available_Domains: list[str]
+
+    def __init__(self, domain: str, logger):
         self.domain = domain
-        self.available_Domains: list[str] = []
         opts = Options()
         opts.add_argument("--headless")
         opts.add_argument("--disable-gpu")
@@ -27,6 +28,7 @@ class CheckDBs:
             service=FirefoxService(GeckoDriverManager().install()), 
             options=opts,
             firefox_profile=firefox_profile)
+        self.logger = logger
 
     def checkWhoisXML(self) -> None:
         try:
@@ -38,13 +40,14 @@ class CheckDBs:
             input_field.send_keys(Keys.DELETE)
             input_field.send_keys(self.domain)
             input_field.submit()
-            time.sleep(10)
+            time.sleep(1)
             response = self.browser.find_element(By.CLASS_NAME, "json")
             response = json.loads(response.text)
             for domain in response["result"]["records"]:
                 self.available_Domains.append(domain["domain"])
                 print("[i] Finished checking WhoisXML db.")
         except Exception as e:
+            self.logger.error(f"Couldn't read WhoisXML db: {e}")
             print("[!] Couldn't read WhoisXML db")
 
     def get_domains(self) -> list[str]:

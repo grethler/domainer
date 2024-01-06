@@ -1,9 +1,22 @@
 import sys
 import argparse
+import logging
+import logging.handlers
 import urllib.request
 from domainer.runsearches import Runsearches
 
 class Domainer:
+
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.ERROR)
+        self.formatter = logging.Formatter("[%(asctime)s] %(message)s")
+        handler = logging.handlers.RotatingFileHandler(
+            filename=f"./logs/{self.logger}.log", maxBytes=5 * 1024 * 1024, backupCount=5
+        )
+        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
 
     def logo(self) -> None:
         """
@@ -35,7 +48,7 @@ class Domainer:
 
         print(f"[i] Searching for subdomains of: {target}")
         print("[i] Step may be stopped with CTRL+C")
-        start = Runsearches(www, db, dict, threads)
+        start = Runsearches(www, db, dict, threads, self.logger)
         domains = start.searches(target)
         if len(domains) > 0: 
             print("[i] A total of " + str(len(domains)) +  " domains have been found!")

@@ -8,7 +8,7 @@ from selenium.common.exceptions import NoSuchElementException
 from webdriver_manager.firefox import GeckoDriverManager
 
 class Bingcheck:
-    def __init__(self):
+    def __init__(self, logger):
         opts = Options()
         opts.add_argument("--headless")
         opts.add_argument("--disable-gpu")
@@ -20,6 +20,7 @@ class Bingcheck:
             service=FirefoxService(GeckoDriverManager().install()), 
             options=opts,
             firefox_profile=firefox_profile)
+        self.logger = logger
 
     def check_element(self, element):
         available = True
@@ -64,8 +65,8 @@ class Bingcheck:
                 time.sleep(1)           
                 number += 30
                 firstsite = False
-            except KeyboardInterrupt:
-                print("\nSkipping.")
+            except Exception as e:
+                self.logger.error(f"Couldn't read Bing: {e}")
                 break
 
         self.browser.quit()
