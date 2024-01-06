@@ -1,6 +1,5 @@
-#!/usr/bin/env python3
-
 import time
+import warnings
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service as FirefoxService
@@ -9,8 +8,10 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from webdriver_manager.firefox import GeckoDriverManager
 
+warnings.filterwarnings("ignore", category=DeprecationWarning) 
+
 class Googlecheck:
-    def __init__(self):
+    def __init__(self, logger):
         opts = Options()
         opts.add_argument("--headless")
         opts.add_argument("--disable-gpu")
@@ -21,9 +22,11 @@ class Googlecheck:
             service=FirefoxService(GeckoDriverManager().install()),
             options=opts,
             firefox_profile=firefox_profile)
-    
+        self.logger = logger
+
     def check_element(self, element):
-        """This function checks if an element is available.
+        """
+        This function checks if an element is available.
         """
         available = True
         try:
@@ -40,9 +43,10 @@ class Googlecheck:
             except NoSuchElementException:
                 available = False
         return(available)
-        
+
     def get_domains(self, domain):
-        """This function gets the domains from each site of the search.
+        """
+        This function gets the domains from each site of the search.
         """  
         urls = []
         num = 0   
@@ -50,27 +54,26 @@ class Googlecheck:
         print("Starting google search...")
         while(True):
             try:
-                progress = ""
                 #if not cookie:
                 #    cookie = self.browser.get_cookie("GOOGLE_ABUSE_EXEMPTION")      
                 #self.browser.add_cookie(cookie)
-                
+
                 self.browser.get("https://www.google.com/search?q=site%3A" 
                                 + domain + "&start=" + str(num))
                 if self.check_element([By.ID, "recaptcha-checkbox-border"]):
                     self.browser.find_element(By.ID, 
                                             "recaptcha-checkbox-border") \
                                             .click()
-                    
+
                 if self.check_element([By.ID, "W0wltc"]):
                     self.browser.find_element(By.ID, "W0wltc").click()
-                
+
                 if num == 0:
                     entries = int((self.browser.find_element(By.ID,
                                                             "result-stats") \
                                                             .text)
                                 .split(" ")[1].replace(".", ""))
-                        
+
                 for url in self.browser.find_elements(By.TAG_NAME, "cite"):
                     if url.text and domain in url.text:
                         # removes protocol
@@ -82,25 +85,17 @@ class Googlecheck:
                             pass   
                         if cleaned_url not in urls:
                             urls += [cleaned_url]
-                    
+
                 time.sleep(2)
                 num += 10
                 if entries == 0:
                     break
-                perc = int(100*(num/entries))
-                progress += "\r["
-                for i in range(perc):
-                    progress += "#"
-                for i in range(100-perc):
-                    progress += "."
-                progress += "]"
-                print(progress, end="")
-                
+
                 if not self.check_element([By.ID, "pnnext"]):
                     break
-            except KeyboardInterrupt:
-                print("\nSkipping.")
+            except Exception as e:
+                self.logger.error(f"Couldn't read Google: {e}")
                 break
-            
+
         self.browser.quit() 
         return(urls)
