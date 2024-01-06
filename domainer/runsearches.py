@@ -3,6 +3,7 @@ from domainer.www.google import Googlecheck
 from domainer.www.bing import Bingcheck
 from domainer.www.duckduckgo import Duckduckgocheck
 from domainer.dictionary.dict_attack import DictionaryAttack
+from domainer.dbs.db import CheckDBs
 
 class Runsearches:
     def __init__(self, www: bool, db: bool, dic: int, threads: int):
@@ -48,8 +49,10 @@ class Runsearches:
                         domains += [d]
 
         if self.do_db:
-            # Work in progress
-            pass
+            db = CheckDBs(domain)
+            for d in db.get_domains():
+                if d not in domains:
+                    domains += [d]
 
         if self.do_dic:
             da = DictionaryAttack(self.do_dic, self.threads)

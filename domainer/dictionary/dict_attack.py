@@ -3,7 +3,7 @@ import threading
 import subprocess
 
 class DictionaryAttack:
-    available_Domains: list = []
+    available_Domains: list[str]
 
     def __init__(self, strength: int, threads: int):
         self.strength = strength
