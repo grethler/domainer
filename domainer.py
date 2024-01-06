@@ -51,7 +51,7 @@ class Domainer:
             print("[i] A total of " + str(len(domains)) +  " domains have been found!")
             self.askexport(domains)   
         else:
-            print("[!] No domains found!")
+            sys.exit("[!] No domains found!")
         # add checking here
 
 if __name__ == "__main__":
