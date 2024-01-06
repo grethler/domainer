@@ -14,7 +14,7 @@ For example instead of `https://www.github.com` use `github.com`
 
 ## Clone repository:
 ```bash
-git clone https://github.com/delbra1n/domainer
+git clone https://github.com/grethler/domainer
 ```
 
 ## Install dependencies:
