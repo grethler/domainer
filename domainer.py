@@ -9,6 +9,7 @@ class Domainer:
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.ERROR)
+        logging.basicConfig(filename="./domainer/logs/domainer.log")
         self.formatter = logging.Formatter("[%(asctime)s] %(message)s")
         self.stream_handler = logging.StreamHandler()
         self.stream_handler.setFormatter(self.formatter)
