@@ -34,7 +34,7 @@ class Duckduckgocheck:
 
     def get_domains(self, domain):  
         urls = []
-        print("\nStarting DuckDuckGo search...")
+        print("[i] Starting DuckDuckGo search...")
         self.browser.get("https://duckduckgo.com/?q=site%3A" + 
                                 domain)
         while(True):
@@ -61,5 +61,5 @@ class Duckduckgocheck:
                 break
 
         self.browser.quit()
-        print("Finished.")   
+        print("[i] Finished.")   
         return(urls)
