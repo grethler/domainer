@@ -2,6 +2,7 @@ import urllib.request
 from domainer.www.google import Googlecheck
 from domainer.www.bing import Bingcheck
 from domainer.www.duckduckgo import Duckduckgocheck
+from domainer.www.yahoo import Yahoocheck
 from domainer.dictionary.dict_attack import DictionaryAttack
 from domainer.dbs.db import CheckDBs
 
@@ -30,14 +31,10 @@ class Runsearches:
         domains = []
 
         if self.do_www:
-            google = Googlecheck(self.logger)
             bing = Bingcheck(self.logger)
             ddg = Duckduckgocheck(self.logger)
-
-            if self.check_connection("https://www.google.com/"):
-                for d in google.get_domains(domain):
-                    if d not in domains:
-                        domains += [d]
+            google = Googlecheck(self.logger)
+            yahoo = Yahoocheck(self.logger)
 
             if self.check_connection("https://www.bing.com/"):
                 for d in bing.get_domains(domain):
@@ -46,6 +43,16 @@ class Runsearches:
 
             if self.check_connection("https://www.duckduckgo.com/"):
                 for d in ddg.get_domains(domain):
+                    if d not in domains:
+                        domains += [d]
+
+            if self.check_connection("https://www.google.com/"):
+                for d in google.get_domains(domain):
+                    if d not in domains:
+                        domains += [d]
+
+            if self.check_connection("https://search.yahoo.com/"):
+                for d in yahoo.get_domains(domain):
                     if d not in domains:
                         domains += [d]
 

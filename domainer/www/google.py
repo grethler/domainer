@@ -51,7 +51,7 @@ class Googlecheck:
         urls = []
         num = 0   
         entries = ""
-        print("Starting google search...")
+        print("[i] Starting Google search...")
         while(True):
             try:
                 #if not cookie:
@@ -98,4 +98,5 @@ class Googlecheck:
                 break
 
         self.browser.quit() 
+        print("[i] Finished.")
         return(urls)

@@ -36,7 +36,7 @@ class Bingcheck:
     def get_domains(self, domain):  
         number = 1
         urls = []
-        print("\nStarting Bing search...")
+        print("[i] Starting Bing search...")
         firstsite = True
         while(True):
             try:
@@ -73,5 +73,5 @@ class Bingcheck:
                 break
 
         self.browser.quit()
-        print("Finished.")   
+        print("[i] Finished.")   
         return(urls)
