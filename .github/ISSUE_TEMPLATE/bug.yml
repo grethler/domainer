@@ -3,7 +3,7 @@ description: File a bug report
 title: "[🐛]: "
 labels: ["bug"]
 assignees:
-  - delbra1n
+  - grethler
 body:
   - type: markdown
     attributes:
@@ -17,6 +17,13 @@ body:
       placeholder: optional
     validations:
       required: false
+  - type: checkboxes
+  attributes:
+    label: Is there an existing issue for this?
+    description: Please search to see if an issue already exists for the bug you encountered.
+    options:
+    - label: I have searched the existing issues
+      required: true
   - type: textarea
     id: what-happened
     attributes:
@@ -31,11 +38,35 @@ body:
       placeholder: Tell us what you see!
     validations:
       required: true
+  - type: dropdown
+  attributes:
+    label: Environment
+    description: What environment are you using?
+    multiple: false
+    options:
+      - Docker
+      - Python virtual environment
+      - Normal shell
+    default: None
+  validations:
+    required: true
+  - type: dropdown
+  attributes:
+    label: Operation System
+    description: What OS are you using?
+    multiple: false
+    options:
+      - Windows
+      - Linux
+      - MacOS
+    default: None
+  validations:
+    required: true
   - type: checkboxes
     id: terms
     attributes:
       label: Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/delbra1n/openlab/.github/CODE_OF_CONDUCT.md)
+      description: By submitting this issue, you agree to follow our [Code of Conduct](../CODE_OF_CONDUCT.md)
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true
