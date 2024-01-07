@@ -48,7 +48,6 @@ class Duckduckgocheck:
                         cleaned_url = (url.text).split("://")[-1].split(domain)[0] \
                         + domain
                         if cleaned_url not in urls:
-                            print(cleaned_url)
                             urls += [cleaned_url]
                 try:
                     self.browser.find_element(By.CLASS_NAME, 
