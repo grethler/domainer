@@ -31,6 +31,7 @@ class Runsearches:
         domains = []
 
         if self.do_www:
+            print("[i] Installing webcrawl dependencies...")
             bing = Bingcheck(self.logger)
             ddg = Duckduckgocheck(self.logger)
             google = Googlecheck(self.logger)
